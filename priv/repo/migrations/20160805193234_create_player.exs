@@ -6,7 +6,6 @@ defmodule AssassinBackend.Repo.Migrations.CreatePlayer do
       add :name, :string
       add :alias, :string, default: false
       add :points, :integer
-      add :alias, :boolean, default: false
       add :target, references(:player, on_delete: :nothing)
 
       timestamps

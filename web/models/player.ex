@@ -5,7 +5,6 @@ defmodule AssassinBackend.Player do
     field :name, :string
     field :alias, :boolean, default: false
     field :points, :integer
-    field :alias, :boolean, default: false
     belongs_to :target, AssassinBackend.Target
 
     timestamps
