@@ -1,5 +1,21 @@
 # AssassinBackend
 
+## API
+### `GET` /api/players
+Lists players
+```
+data: []
+```
+
+### `POST` /api/players
+```
+{
+  player: {
+    name: "Ben"
+  }
+}
+```
+
 To start your Phoenix app:
 
   * Install dependencies with `mix deps.get`
