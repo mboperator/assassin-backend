@@ -1,8 +1,3 @@
 defmodule AssassinBackend.Repo do
-  @moduledoc """
-    In memory repository
-  """
-
-  
-
+  use Ecto.Repo, otp_app: :assassin_backend
 end
