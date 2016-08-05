@@ -11,7 +11,14 @@ defmodule AssassinBackend.PlayerController do
   end
 
   def create(conn, %{"player" => player_params}) do
-    changeset = Player.changeset(%Player{}, player_params)
+    nouns = ["Pizza", "Book", "Flamingo"]
+    adjectives = ["Smelly", "Ridonculous", "Interesting"]
+    player_alias = Enum.random(nouns) <> Enum.random(adjectives)
+    
+    changeset = Player.changeset(
+      %Player{:alias => player_alias, :points => 0, :alive => true}, 
+      player_params
+    )
 
     case Repo.insert(changeset) do
       {:ok, player} ->
