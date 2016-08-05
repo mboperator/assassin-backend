@@ -17,9 +17,11 @@ defmodule AssassinBackend.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    
-    get "/players", PlayerController, :index
-    get "/players/", PlayerController, :index
+  end
+
+  scope "/api", AssassinBackend do
+    pipe_through :api
+    resources "/players", PlayerController, except: [:new, :edit]
   end
 
   # Other scopes may use custom stacks.

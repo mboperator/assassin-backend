@@ -5,7 +5,6 @@ defmodule AssassinBackend.Player do
     field :name, :string
     field :alias, :string
     field :points, :integer
-    belongs_to :target, AssassinBackend.Target
 
     timestamps
   end
