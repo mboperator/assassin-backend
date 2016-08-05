@@ -3,6 +3,7 @@ defmodule AssassinBackend.UserSocket do
 
   ## Channels
   # channel "rooms:*", AssassinBackend.RoomChannel
+  channel "games:*", AssassinBackend.GameChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
