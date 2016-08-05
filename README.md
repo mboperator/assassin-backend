@@ -4,14 +4,33 @@
 ### `GET` /api/players
 Lists players
 ```
-data: []
+{
+  "data": [
+    {
+      "points": 0,
+      "name": "Marcus",
+      "alive": true,
+      "alias": "RidonculousFlamingo"
+    }
+  ]
+}
 ```
 
 ### `POST` /api/players
 ```
+# Payload
 {
   player: {
-    name: "Ben"
+    name: "Marcus"
+  }
+}
+# Response
+{
+  "data": {
+    "points": 0,
+    "name": "Marcus",
+    "alive": true,
+    "alias": "RidonculousFlamingo"
   }
 }
 ```
