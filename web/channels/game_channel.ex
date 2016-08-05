@@ -6,7 +6,7 @@ defmodule AssassinBackend.GameChannel do
       {
         :ok,
         socket
-        |> assign(:game_id, String.to_integer(game_id)
+        |> assign(:game_id, String.to_integer(game_id))
         |> assign(:player_id, payload["player_id"])
       }
     else
@@ -18,7 +18,7 @@ defmodule AssassinBackend.GameChannel do
     player = Repo.get(AssassinBackend.Player, socket.assigns.player_id)
     target = Repo.get_by(
       AssassinBackend.Player,
-      %{ id: payload["agent_id"], alias: payload["alias"] }
+      %{ id: params["agent_id"], alias: params["alias"] }
     )
 
     handle_in(event, params, player, target, socket)
@@ -37,19 +37,21 @@ defmodule AssassinBackend.GameChannel do
     end
 
     if (player.target_id == target.id) do
-      changeset = AssassinBackend.changeset(target, { alive: false })
-      Repo.update(changeset)
-      {:ok, friend} -> handle_in("state", payload, socket)
+      changeset = AssassinBackend.changeset(target, %{ alive: false })
+      case Repo.update(changeset) do
+        {:ok, friend} ->
+          handle_in("state", payload, socket)
+      end
     else
       {:reply, :ok, socket}
     end
   end
 
-  def handle_in("record", payload, player, socket) do
+  def handle_in("record", payload, player, target, socket) do
     if target do
       changeset = AssassinBackend.changeset(
         target,
-        { points: target.points + 200 }
+        %{ points: target.points + 200 }
       )
       Repo.update(changeset)
     end
