@@ -35,8 +35,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :assassin_backend, AssassinBackend.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "noahstier",
+  password: "",
   database: "assassin_backend_dev",
   hostname: "localhost",
   pool_size: 10

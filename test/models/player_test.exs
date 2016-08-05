@@ -3,7 +3,7 @@ defmodule AssassinBackend.PlayerTest do
 
   alias AssassinBackend.Player
 
-  @valid_attrs %{alias: true, name: "some content", points: 42}
+  @valid_attrs %{alias: "some content", name: "some content", points: 42}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

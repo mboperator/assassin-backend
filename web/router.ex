@@ -17,6 +17,9 @@ defmodule AssassinBackend.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    
+    get "/players", PlayerController, :index
+    get "/players/", PlayerController, :index
   end
 
   # Other scopes may use custom stacks.

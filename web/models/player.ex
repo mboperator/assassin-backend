@@ -3,15 +3,14 @@ defmodule AssassinBackend.Player do
 
   schema "player" do
     field :name, :string
-    field :alias, :boolean, default: false
+    field :alias, :string
     field :points, :integer
-    field :alias, :boolean, default: false
     belongs_to :target, AssassinBackend.Target
 
     timestamps
   end
 
-  @required_fields ~w(name alias points alias)
+  @required_fields ~w(name alias points)
   @optional_fields ~w()
 
   @doc """
