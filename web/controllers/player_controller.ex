@@ -13,7 +13,7 @@ defmodule AssassinBackend.PlayerController do
   def create(conn, %{"player" => player_params}) do
     nouns = ["Pizza", "Book", "Flamingo"]
     adjectives = ["Smelly", "Ridonculous", "Interesting"]
-    player_alias = Enum.random(adjective) <> Enum.random(noun)
+    player_alias = Enum.random(adjectives) <> Enum.random(nouns)
     
     changeset = Player.changeset(
       %Player{:alias => player_alias, :points => 0, :alive => true}, 
