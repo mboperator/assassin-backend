@@ -3,39 +3,54 @@ defmodule AssassinBackend.GameChannel do
 
   def join("games:" <> game_id, payload, socket) do
     if authorized?(payload) do
-      {:ok, assign(socket, :game_id, String.to_integer(game_id)}
+      {
+        :ok,
+        socket
+        |> assign(:game_id, String.to_integer(game_id)
+        |> assign(:player_id, payload["player_id"])
+      }
     else
       {:error, %{reason: "unauthorized"}}
     end
   end
 
-  # Channels can be used in a request/response fashion
-  # by sending replies to requests from the client
-  def handle_in("ping", payload, socket) do
-    {:reply, {:ok, payload}, socket}
+  def handle_in(event, params, socket) do
+    player = Repo.get(AssassinBackend.Player, socket.assigns.player_id)
+    target = Repo.get_by(
+      AssassinBackend.Player,
+      %{ id: payload["agent_id"], alias: payload["alias"] }
+    )
+
+    handle_in(event, params, player, target, socket)
   end
 
-  # It is also common to receive messages from the client and
-  # broadcast to everyone in the current topic (games:lobby).
-  def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
-    {:noreply, socket}
+  def handle_in("ping", payload, player, target, socket) do
+    count = socket.assigns[:count] || 1
+    push socket, "ping", %{player: player, target: target}
+    {:noreply, assign(socket, :count, count+1)}
   end
 
-  def handle_in("kill", payload, socket) do
-    if kill?(payload) do
-      broadcast! socket, "kill", %{
-        agent: payload["agent"],
-        victim: payload["victim"]
-      }
+  def handle_in("kill", payload, player, target, socket) do
+    if (player.points < 100) do
+      {:reply, :ok, socket}
     end
-    {:reply, :ok, socket}
+
+    if (player.target_id == target.id) do
+      changeset = AssassinBackend.changeset(target, { alive: false })
+      Repo.update(changeset)
+      {:ok, friend} -> handle_in("state", payload, socket)
+    end
   end
 
-  def handle_in("record", payload, socket) do
-    if record?(payload) do
-      broadcast! socket, "points", payload
+  def handle_in("record", payload, player, socket) do
+    if target do
+      changeset = AssassinBackend.changeset(
+        target,
+        { points: target.points + 200 }
+      )
+      Repo.update(changeset)
     end
+
     {:noreply, socket}
   end
 
@@ -49,14 +64,6 @@ defmodule AssassinBackend.GameChannel do
 
   # Add authorization logic here as required.
   defp authorized?(_payload) do
-    true
-  end
-
-  defp kill?(payload) do
-    true
-  end
-
-  defp record?(payload) do
     true
   end
 end
