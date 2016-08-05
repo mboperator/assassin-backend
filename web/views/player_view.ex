@@ -13,7 +13,6 @@ defmodule AssassinBackend.PlayerView do
     %{id: player.id,
       name: player.name,
       alias: player.alias,
-      points: player.points,
-      target: player.target}
+      points: player.points}
   end
 end
