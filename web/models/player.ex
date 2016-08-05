@@ -5,7 +5,8 @@ defmodule AssassinBackend.Player do
     field :name, :string
     field :alias, :string
     field :points, :integer
-    belongs_to :target, AssassinBackend.Target
+    # belongs_to :target, AssassinBackend.Player, references: :name, foreign_key: :target_id
+    belongs_to :target_player, AssassinBackend.Player, foreign_key: :target, references: :name
 
     timestamps
   end
