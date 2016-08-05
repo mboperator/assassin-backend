@@ -2,12 +2,13 @@ defmodule AssassinBackend.Game do
   use AssassinBackend.Web, :model
 
   schema "game" do
-    field :organizer_id, :integer
+    field :organizer_name, :string
+    field :in_waiting_room, :boolean
 
     timestamps
   end
 
-  @required_fields ~w(organizer_id)
+  @required_fields ~w(organizer_name)
   @optional_fields ~w()
 
   @doc """

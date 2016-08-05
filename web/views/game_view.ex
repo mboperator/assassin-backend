@@ -11,6 +11,7 @@ defmodule AssassinBackend.GameView do
 
   def render("game.json", %{game: game}) do
     %{id: game.id,
-      organizer_id: game.organizer_id}
+      organizer_name: game.organizer_name,
+      in_waiting_room: game.in_waiting_room}
   end
 end

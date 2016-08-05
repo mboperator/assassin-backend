@@ -1,4 +1,5 @@
 defmodule AssassinBackend.GameController do
+
   use AssassinBackend.Web, :controller
 
   alias AssassinBackend.Game
@@ -11,7 +12,7 @@ defmodule AssassinBackend.GameController do
   end
 
   def create(conn, %{"game" => game_params}) do
-    changeset = Game.changeset(%Game{}, game_params)
+    changeset = Game.changeset(%Game{:in_waiting_room => true}, game_params)
 
     case Repo.insert(changeset) do
       {:ok, game} ->
