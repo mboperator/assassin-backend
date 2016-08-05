@@ -32,6 +32,7 @@ defmodule AssassinBackend.GameChannel do
 
   def handle_in("kill", payload, player, target, socket) do
     if (player.points < 100) do
+      push socket, "kill_fail", %{player: player, target: target}
       {:reply, :ok, socket}
     end
 
@@ -39,6 +40,8 @@ defmodule AssassinBackend.GameChannel do
       changeset = AssassinBackend.changeset(target, { alive: false })
       Repo.update(changeset)
       {:ok, friend} -> handle_in("state", payload, socket)
+    else
+      {:reply, :ok, socket}
     end
   end
 
