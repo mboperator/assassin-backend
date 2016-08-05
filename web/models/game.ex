@@ -1,18 +1,13 @@
-defmodule AssassinBackend.Player do
+defmodule AssassinBackend.Game do
   use AssassinBackend.Web, :model
 
-  schema "player" do
-    field :name, :string
-    field :alias, :string
-    field :points, :integer
-    belongs_to :target_player, AssassinBackend.Player, foreign_key: :target, references: :name
-    belongs_to :current_game, AssassinBackend.Game, foreign_key: :game
-    field :alive, :boolean
+  schema "game" do
+    field :organizer_id, :integer
 
     timestamps
   end
 
-  @required_fields ~w(name alias points)
+  @required_fields ~w(organizer_id)
   @optional_fields ~w()
 
   @doc """

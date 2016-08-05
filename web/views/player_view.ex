@@ -10,9 +10,10 @@ defmodule AssassinBackend.PlayerView do
   end
 
   def render("player.json", %{player: player}) do
-    %{id: player.id,
-      name: player.name,
+    #%{id: player.id,
+      %{name: player.name,
       alias: player.alias,
+      alive: player.alive,
       points: player.points}
   end
 end

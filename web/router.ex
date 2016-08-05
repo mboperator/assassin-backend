@@ -22,6 +22,7 @@ defmodule AssassinBackend.Router do
   scope "/api", AssassinBackend do
     pipe_through :api
     resources "/players", PlayerController, except: [:new, :edit]
+    resources "/games", GameController, only: [:create]
   end
 
   # Other scopes may use custom stacks.
