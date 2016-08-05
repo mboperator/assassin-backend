@@ -10,7 +10,7 @@ defmodule AssassinBackend.Player do
     timestamps
   end
 
-  @required_fields ~w(name alias points)
+  @required_fields ~w(name)
   @optional_fields ~w()
 
   @doc """
