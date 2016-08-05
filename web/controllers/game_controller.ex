@@ -3,23 +3,22 @@ defmodule AssassinBackend.GameController do
 
   alias AssassinBackend.Game
 
-  # plug :scrub_params, "game" when action in [:create, :update]
+  plug :scrub_params, "game" when action in [:create, :update]
 
   def index(conn, _params) do
     game = Repo.all(Game)
     render(conn, "index.json", game: game)
   end
 
-  def create(conn, %{"organizer_id" => organizer_id}) do
-    changeset = Game.changeset(%Game{}, %{"organizer_id" => organizer_id})
-    IO.puts organizer_id
+  def create(conn, %{"game" => game_params}) do
+    changeset = Game.changeset(%Game{}, game_params)
 
     case Repo.insert(changeset) do
-      {:ok, organizer_id} ->
+      {:ok, game} ->
         conn
         |> put_status(:created)
-        |> put_resp_header("location", game_path(conn, :show, organizer_id))
-        |> render("show.json", organizer_id: organizer_id)
+        |> put_resp_header("location", game_path(conn, :show, game))
+        |> render("show.json", game: game)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
